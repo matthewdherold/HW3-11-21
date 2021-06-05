@@ -5,6 +5,8 @@
 ## Description
 Web app that uses a basic json file as a database to store user notes
 
+Link to deployed application: https://hw3-11-21.herokuapp.com/notes
+
 ## Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
