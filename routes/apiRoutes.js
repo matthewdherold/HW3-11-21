@@ -9,13 +9,13 @@ module.exports = (app) => {
     });
     app.post('/api/notes', (req, res) => {
         console.log(req.body);
-        const db = JSON.parse(fs.readFileSync(path.join(__dirname, '../../db/db.json'), 'utf-8'));
+        const db = JSON.parse(fs.readFileSync(path.join(__dirname, '../db/db.json'), 'utf-8'));
         const newNote = req.body;
         newNote.id = uniqid();
         console.log(db);
         console.log(newNote);
         db.push(newNote);
-        fs.writeFileSync(path.join(__dirname, '../../db/db.json'), JSON.stringify(db));
+        fs.writeFileSync(path.join(__dirname, '../db/db.json'), JSON.stringify(db));
         res.json(true);
     });
 };
