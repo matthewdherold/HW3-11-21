@@ -8,14 +8,25 @@ module.exports = (app) => {
     app.get('/api/notes', (req, res) => { res.json(notes)
     });
     app.post('/api/notes', (req, res) => {
-        console.log(req.body);
-        const db = JSON.parse(fs.readFileSync(path.join(__dirname, '../db/db.json'), 'utf-8'));
-        const newNote = req.body;
-        newNote.id = uniqid();
-        console.log(db);
-        console.log(newNote);
-        db.push(newNote);
-        fs.writeFileSync(path.join(__dirname, '../db/db.json'), JSON.stringify(db));
+        let noteID;
+        const id = noteID + 1;
+        if(noteData.length){
+            noteID = parseInt(Math.max(0, noteData.length));
+        } else{
+            noteID = 0;
+        }
+        let addedNote = req.body;
+        addedNote.id = uniqid();
+        noteData.push(addedNote);
+        res.json(noteData.slice(-1));
+        fs.writeFileSync(path.join(__dirname, "../db/db.json"), JSON.stringify(noteData, '\t'));
+        console.log(noteData);
+      });
+
+      app.delete('/api/notes/:id', (req, res) => {
+        let currentNotesearch = req.params.id;
+        var deleteNote = noteData.map(function(item) { return item.id; }).indexOf(currentNotesearch);
+        noteData.splice(deleteNote, 1);
         res.json(true);
-    });
-};
+        });
+    }
