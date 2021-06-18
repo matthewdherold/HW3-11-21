@@ -10,23 +10,23 @@ module.exports = (app) => {
     app.post('/api/notes', (req, res) => {
         let noteID;
         const id = noteID + 1;
-        if(noteData.length){
-            noteID = parseInt(Math.max(0, noteData.length));
+        if(notes.length){
+            noteID = parseInt(Math.max(0, notes.length));
         } else{
             noteID = 0;
         }
         let addedNote = req.body;
         addedNote.id = uniqid();
-        noteData.push(addedNote);
-        res.json(noteData.slice(-1));
-        fs.writeFileSync(path.join(__dirname, "../db/db.json"), JSON.stringify(noteData, '\t'));
-        console.log(noteData);
+        notes.push(addedNote);
+        res.json(notes.slice(-1));
+        fs.writeFileSync(path.join(__dirname, "../db/db.json"), JSON.stringify(notes, '\t'));
+        console.log(notes);
       });
 
       app.delete('/api/notes/:id', (req, res) => {
         let currentNotesearch = req.params.id;
-        var deleteNote = noteData.map(function(item) { return item.id; }).indexOf(currentNotesearch);
-        noteData.splice(deleteNote, 1);
+        var deleteNote = notes.map(function(item) { return item.id; }).indexOf(currentNotesearch);
+        notes.splice(deleteNote, 1);
         res.json(true);
         });
     }
